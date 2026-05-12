@@ -8,16 +8,16 @@ on:
         description: 'Customer name (folder name in tenant directory)'
         required: true
         type: string
-      planGitHubEnvironment:
-        description: 'GitHub Environment for Planning'
-        required: true
-        type: choice
-        options: [dev, staging, prod]
-      deployGitHubEnvironment:
-        description: 'GitHub Environment for Deployment'
-        required: true
-        type: choice
-        options: [dev, staging, prod]
+    #   planGitHubEnvironment:
+    #     description: 'GitHub Environment for Planning'
+    #     required: true
+    #     type: choice
+    #     options: [dev, staging, prod]
+    #   deployGitHubEnvironment:
+    #     description: 'GitHub Environment for Deployment'
+    #     required: true
+    #     type: choice
+    #     options: [dev, staging, prod]
 
 permissions:
   id-token: write
