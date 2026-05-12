@@ -8,16 +8,16 @@ on:
         description: 'Customer name (folder name in tenant directory)'
         required: true
         type: string
-    #   planGitHubEnvironment:
-    #     description: 'GitHub Environment for Planning'
-    #     required: true
-    #     type: choice
-    #     options: [dev, staging, prod]
-    #   deployGitHubEnvironment:
-    #     description: 'GitHub Environment for Deployment'
-    #     required: true
-    #     type: choice
-    #     options: [dev, staging, prod]
+      planGitHubEnvironment:
+        description: 'GitHub Environment for Planning'
+        required: true
+        type: choice
+        options: [dev, staging, prod]
+      deployGitHubEnvironment:
+        description: 'GitHub Environment for Deployment'
+        required: true
+        type: choice
+        options: [dev, staging, prod]
 
 permissions:
   id-token: write
@@ -77,11 +77,11 @@ jobs:
         run: echo "TF_VAR_environment=${{ env.DEPLOY_ENV }}" >> "$GITHUB_ENV"
 
       - name: Azure Login (OIDC)
-        uses: azure/login@v1
+        uses: azure/login@v2
         with:
-          client-id:       ${{ env.AZURE_CLIENT_ID }}
-          tenant-id:       ${{ env.AZURE_TENANT_ID }}
-          subscription-id: ${{ env.AZURE_SUBSCRIPTION_ID }}
+          client-id: ${{ vars.AZURE_CLIENT_ID }}
+          tenant-id: ${{ vars.AZURE_TENANT_ID }}
+          subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
 
       - name: Terraform Format Check
         run: terraform fmt -check -recursive ${{ env.TF_ROOT }} ${{ env.CUSTOMER_FOLDER }}
