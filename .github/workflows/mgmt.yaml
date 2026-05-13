@@ -94,13 +94,19 @@ jobs:
 
       - name: Terraform Init
         working-directory: ${{ env.TF_ROOT }}
+        env:
+          ARM_USE_AZUREAD: "true"          # belt-and-braces: forces AAD auth via env too
+          ARM_CLIENT_ID:       ${{ vars.AZURE_CLIENT_ID }}
+          ARM_TENANT_ID:       ${{ vars.AZURE_TENANT_ID }}
+          ARM_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+          ARM_USE_OIDC: "true"
         run: |
           terraform init -upgrade -reconfigure \
             -backend-config="resource_group_name=my-tfstate-rg" \
             -backend-config="storage_account_name=mytfstateacct2026" \
             -backend-config="container_name=tfstate" \
-            -backend-config="${CUSTID}.tfstate" \
-            -backend-config= "use_azuread_auth=true"
+            -backend-config="key=${CUSTID}.tfstate" \
+            -backend-config="use_azuread_auth=true"
 
       - name: Terraform Validate
         working-directory: ${{ env.TF_ROOT }}
