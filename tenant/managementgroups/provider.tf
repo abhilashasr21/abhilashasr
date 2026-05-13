@@ -10,10 +10,10 @@ terraform {
   }
 
   backend "azurerm" {
-    # resource_group_name  = "my-tfstate-rg"
-    # storage_account_name = "mytfstateacct2026"
-    # container_name       = "tfstate"
-    # key                  = "management_groups.tfstate"
+    resource_group_name  = "my-tfstate-rg"
+    storage_account_name = "mytfstateacct2026"
+    container_name       = "tfstate"
+    key                  = "${var.cutomer_id}.tfstate"
   }
 }
 
