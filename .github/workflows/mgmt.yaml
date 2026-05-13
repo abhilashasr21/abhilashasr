@@ -102,6 +102,11 @@ jobs:
             -backend-config="key=${CUSTID}.tfstate" \
             -backend-config="use_azuread_auth=true"
 
+      - name: TFLint
+        uses: ../github/actions/tflint
+        with:
+          working-directory: ${{env.TF_ROOT}}
+
       - name: Terraform Validate
         working-directory: ${{ env.TF_ROOT }}
         run: terraform validate
