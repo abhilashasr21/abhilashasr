@@ -10,5 +10,6 @@ variable "management_groups" {
     display_name = string
     parent_id    = string
   }))
+  default = { }
 }
 

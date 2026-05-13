@@ -41,6 +41,12 @@ jobs:
     environment: ${{ github.event.inputs.planGitHubEnvironment }}
     env:
       DEPLOY_ENV: ${{ github.event.inputs.planGitHubEnvironment }}
+      # Auth for the azurerm provider AND backend — applies to every step
+      ARM_USE_OIDC:        "true"
+      ARM_USE_AZUREAD:     "true"
+      ARM_CLIENT_ID:       ${{ vars.AZURE_CLIENT_ID }}
+      ARM_TENANT_ID:       ${{ vars.AZURE_TENANT_ID }}
+      ARM_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
 
     steps:
       - name: Checkout code
@@ -76,12 +82,6 @@ jobs:
       - name: Set Terraform variables
         run: echo "TF_VAR_environment=${{ env.DEPLOY_ENV }}" >> "$GITHUB_ENV"
 
-      - name: Debug Azure vars present
-        run: |
-          echo "client-id set?      ${{ vars.AZURE_CLIENT_ID != '' }}"
-          echo "tenant-id set?      ${{ vars.AZURE_TENANT_ID != '' }}"
-          echo "subscription set?   ${{ vars.AZURE_SUBSCRIPTION_ID != '' }}"
-
       - name: Azure Login (OIDC)
         uses: azure/login@v2
         with:
@@ -94,12 +94,6 @@ jobs:
 
       - name: Terraform Init
         working-directory: ${{ env.TF_ROOT }}
-        env:
-          ARM_USE_AZUREAD: "true"          # belt-and-braces: forces AAD auth via env too
-          ARM_CLIENT_ID:       ${{ vars.AZURE_CLIENT_ID }}
-          ARM_TENANT_ID:       ${{ vars.AZURE_TENANT_ID }}
-          ARM_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
-          ARM_USE_OIDC: "true"
         run: |
           terraform init -upgrade -reconfigure \
             -backend-config="resource_group_name=my-tfstate-rg" \
@@ -116,9 +110,7 @@ jobs:
         working-directory: ${{ env.TF_ROOT }}
         run: |
           echo "Using var-file: ${TFVARS_REL}"
-          terraform plan \
-            -var-file="${TFVARS_REL}" \
-            -out=tfplan
+          terraform plan -var-file="${TFVARS_REL}" -out=tfplan
 
       - name: Upload Plan Artifact
         uses: actions/upload-artifact@v4
