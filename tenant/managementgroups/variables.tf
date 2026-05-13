@@ -8,7 +8,6 @@ variable "management_groups" {
   description = "A map of management groups to create. The key is the name of the management group, and the value is an object containing the display name and parent ID."
   type = map(object({
     display_name = string
-    parent_id    = string
   }))
   default = { }
 }
