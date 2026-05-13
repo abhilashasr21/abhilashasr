@@ -1,13 +1,23 @@
 name: "TFLint"
-description: "Install and run the latest TFLint against the repository root."
+description: "Install and run the latest TFLint against a Terraform directory."
+
+inputs:
+  working-directory:
+    description: "Directory containing the Terraform code to lint."
+    required: false
+    default: "."
+  tflint_version:
+    description: "TFLint version to install (default: latest)."
+    required: false
+    default: "latest"
 
 runs:
   using: "composite"
   steps:
-    - name: Setup TFLint (latest)
+    - name: Setup TFLint
       uses: terraform-linters/setup-tflint@v4
       with:
-        tflint_version: latest
+        tflint_version: ${{ inputs.tflint_version }}
 
     - name: TFLint version
       shell: bash
@@ -15,10 +25,12 @@ runs:
 
     - name: TFLint init (download plugins)
       shell: bash
+      working-directory: ${{ inputs.working-directory }}
       env:
         GITHUB_TOKEN: ${{ github.token }}
       run: tflint --init
 
     - name: Run TFLint
       shell: bash
+      working-directory: ${{ inputs.working-directory }}
       run: tflint --format=default --call-module-type=local
