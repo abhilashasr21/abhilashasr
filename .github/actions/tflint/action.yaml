@@ -1,0 +1,24 @@
+name: "TFLint"
+description: "Install and run the latest TFLint against the repository root."
+
+runs:
+  using: "composite"
+  steps:
+    - name: Setup TFLint (latest)
+      uses: terraform-linters/setup-tflint@v4
+      with:
+        tflint_version: latest
+
+    - name: TFLint version
+      shell: bash
+      run: tflint --version
+
+    - name: TFLint init (download plugins)
+      shell: bash
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
+      run: tflint --init
+
+    - name: Run TFLint
+      shell: bash
+      run: tflint --format=default --call-module-type=local
