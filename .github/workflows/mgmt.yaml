@@ -103,7 +103,7 @@ jobs:
             -backend-config="use_azuread_auth=true"
 
       - name: TFLint
-        uses: ../github/actions/tflint
+        uses: ./.github/actions/tflint
         with:
           working-directory: ${{env.TF_ROOT}}
 
