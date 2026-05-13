@@ -1,8 +1,8 @@
-"customer_id" = "bu0001"
+customer_id = "bu0001"
 
-"management_groups" = {
-  "root" = {
-    "display_name" = "Root Management Group"
-    "name" = "root"
+management_groups = {
+  root = {
+    display_name = "Root Management Group"
+    name         = "root"
   }
 }
