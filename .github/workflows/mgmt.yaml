@@ -95,7 +95,11 @@ jobs:
       - name: Terraform Init
         working-directory: ${{ env.TF_ROOT }}
         run: |
-          terraform init
+          terraform init -upgrade -reconfigure \
+            -backend-config="resource_group_name=my-tfstate-rg" \
+            -backend-config="storage_account_name=mytfstateacct2026" \
+            -backend-config="container_name=tfstate" \
+            -backend-config="${CUSTID}.tfstate"
 
       - name: Terraform Validate
         working-directory: ${{ env.TF_ROOT }}
