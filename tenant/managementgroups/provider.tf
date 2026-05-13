@@ -10,10 +10,11 @@ terraform {
   }
 
   backend "azurerm" {
-    resource_group_name  = "my-tfstate-rg"
-    storage_account_name = "mytfstateacct2026"
-    container_name       = "tfstate"
-    key                  = "bu0001.tfstate"
+    # resource_group_name  = "my-tfstate-rg"
+    # storage_account_name = "mytfstateacct2026"
+    # container_name       = "tfstate"
+    # key                  = "bu0001.tfstate"
+    # use_azuread_auth     = true
   }
 }
 
