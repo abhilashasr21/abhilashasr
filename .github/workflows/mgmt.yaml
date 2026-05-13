@@ -76,6 +76,12 @@ jobs:
       - name: Set Terraform variables
         run: echo "TF_VAR_environment=${{ env.DEPLOY_ENV }}" >> "$GITHUB_ENV"
 
+      - name: Debug Azure vars present
+        run: |
+          echo "client-id set?      ${{ vars.AZURE_CLIENT_ID != '' }}"
+          echo "tenant-id set?      ${{ vars.AZURE_TENANT_ID != '' }}"
+          echo "subscription set?   ${{ vars.AZURE_SUBSCRIPTION_ID != '' }}"
+
       - name: Azure Login (OIDC)
         uses: azure/login@v2
         with:
