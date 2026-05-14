@@ -1,4 +1,4 @@
-customer_id = "bu0001"
+# customer_id = "bu0001"
 
 management_groups = {
   root = {

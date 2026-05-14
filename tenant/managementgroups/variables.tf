@@ -1,7 +1,7 @@
-variable "customer_id" {
-  description = "The ID of the customer to which the management groups belong."
-  type        = string
-}
+# variable "customer_id" {
+#   description = "The ID of the customer to which the management groups belong."
+#   type        = string
+# }
 
 #create Variable for management groups
 variable "management_groups" {
