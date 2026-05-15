@@ -109,6 +109,11 @@ jobs:
         with:
           working-directory: ${{ env.TF_ROOT }}
 
+      - name: Checkov
+        uses: ./.github/actions/checkov
+        with:
+          workflow_dispatch: ${{env.TF_ROOT}}
+
       - name: Terraform Validate
         working-directory: ${{ env.TF_ROOT }}
         run: terraform validate
