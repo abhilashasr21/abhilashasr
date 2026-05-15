@@ -23,6 +23,8 @@ permissions:
   id-token: write
   contents: read
   pull-requests: write
+  security-events: write
+  actions: read
 
 concurrency:
   group: mgmt-${{ github.event.inputs.customer_name }}-${{ github.event.inputs.planGitHubEnvironment }}
