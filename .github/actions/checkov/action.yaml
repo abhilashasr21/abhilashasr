@@ -1,11 +1,11 @@
 name: "TFLint"
 
 description: "Use Checkov Terraform Scan"
-inputs:
-  working-directory:
-    description: "Directory containing the Terraform code for Scan."
-    required: false
-    default: "."
+# inputs:
+#   working-directory:
+#     description: "Directory containing the Terraform code for Scan."
+#     required: false
+#     default: "."
 
 runs:
   using: "composite"
